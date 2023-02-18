@@ -1,9 +1,9 @@
-﻿using SimpleRazorCRUD.EntitiesModels;
-using SimpleRazorCRUD.Interfaces;
+﻿using SimpleRazorCRUD.DataRepositories.Interfaces;
+using SimpleRazorCRUD.EntitiesModels;
 
 namespace SimpleRazorCRUD.DataRepositories
 {
-    public class CarRepository : IEntityRepository<Car>
+    public class CarRepository : ICarRepository
     {
         private List<Car> cars = new()
         {

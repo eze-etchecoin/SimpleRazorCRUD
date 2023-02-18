@@ -1,6 +1,6 @@
 ﻿using SimpleRazorCRUD.EntitiesModels;
 
-namespace SimpleRazorCRUD.Interfaces
+namespace SimpleRazorCRUD.DataRepositories.Interfaces
 {
     public interface IEntityRepository<T> where T : BaseEntity
     {

@@ -1,23 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SimpleRazorCRUD.DataRepositories;
+using SimpleRazorCRUD.DataRepositories.Interfaces;
 using SimpleRazorCRUD.EntitiesModels;
 using SimpleRazorCRUD.Models;
-using System.Runtime.CompilerServices;
 
 namespace SimpleRazorCRUD.Controllers
 {
     public class CarsController : Controller
     {
-        private readonly CarRepository _carRepository;
+        private readonly ICarRepository _carRepository;
 
-        public CarsController(CarRepository carRepository)
+        public CarsController(ICarRepository carRepository)
         {
             _carRepository = carRepository;
         }
         
         public ActionResult Index()
         {
-            return View();
+            var cars = _carRepository.GetAll();
+            
+            return View("List", cars);
         }
         public ActionResult Details(int id)
         {

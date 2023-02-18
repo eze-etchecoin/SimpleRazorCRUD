@@ -1,13 +1,12 @@
 using SimpleRazorCRUD.DataRepositories;
-using SimpleRazorCRUD.EntitiesModels;
-using SimpleRazorCRUD.Interfaces;
+using SimpleRazorCRUD.DataRepositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IEntityRepository<Car>, CarRepository>();
+builder.Services.AddSingleton<ICarRepository, CarRepository>();
 
 var app = builder.Build();
 
