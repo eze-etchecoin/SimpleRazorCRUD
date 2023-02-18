@@ -4,13 +4,18 @@ using SimpleRazorCRUD.DataRepositories.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+var mvcBuilder = builder.Services.AddControllersWithViews();
+
+if (builder.Environment.IsDevelopment())
+{
+    // This feature is added for quick development purposes.
+    mvcBuilder.AddRazorRuntimeCompilation();
+}
 
 builder.Services.AddSingleton<ICarRepository, CarRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

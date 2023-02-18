@@ -16,7 +16,9 @@ namespace SimpleRazorCRUD.Controllers
         
         public ActionResult Index()
         {
-            var cars = _carRepository.GetAll();
+            var cars = _carRepository
+                .GetAll()
+                .Select(MapCarToCarModel);
             
             return View("List", cars);
         }
