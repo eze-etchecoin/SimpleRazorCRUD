@@ -13,13 +13,13 @@ namespace SimpleRazorCRUD.Controllers
         {
             _carRepository = carRepository;
         }
-        
+
         public ActionResult Index()
         {
             var cars = _carRepository
                 .GetAll()
                 .Select(MapCarToCarModel);
-            
+
             return View("List", cars);
         }
 
@@ -56,19 +56,14 @@ namespace SimpleRazorCRUD.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(IFormCollection collection)
+        public ActionResult Add(CarModel carModel)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var car = MapCarModelToCar(carModel);
+            _carRepository.Insert(car);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        [Route("Edit/{id}")]
         public ActionResult Edit(int id)
         {
             var car = _carRepository.GetOne(id);
@@ -83,25 +78,21 @@ namespace SimpleRazorCRUD.Controllers
             ViewData["ShowId"] = true;
             ViewData["FormAction"] = "Edit";
             ViewData["DisabledFieldset"] = false;
+            ViewData["OkButtonText"] = "Save";
 
             return View("Form", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(CarModel carModel)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var car = MapCarModelToCar(carModel);
+            _carRepository.Update(car);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        [Route("Delete/{id}")]
         public ActionResult Delete(int id)
         {
             var car = _carRepository.GetOne(id);
@@ -116,23 +107,23 @@ namespace SimpleRazorCRUD.Controllers
             ViewData["ShowId"] = true;
             ViewData["FormAction"] = "Delete";
             ViewData["DisabledFieldset"] = true;
+            ViewData["OkButtonText"] = "OK";
 
             return View("Form", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(CarModel carModel)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var car = MapCarModelToCar(carModel);
+            _carRepository.Delete(car);
+
+            return RedirectToAction(nameof(Index));
         }
+
+        // This methods were created to map data between Models from views and Entities.
+        // A mapping library like Automapper could be use instead.
 
         private static CarModel MapCarToCarModel(Car car) => new()
         {
@@ -154,6 +145,17 @@ namespace SimpleRazorCRUD.Controllers
             Model = car.Model,
             Price = car.Price,
             Year = car.Year
+        };
+
+        private static Car MapCarModelToCar(CarModel carModel) => new()
+        {
+            Id = carModel.Id,
+            Color = carModel.Color,
+            Doors = carModel.Doors,
+            Make = carModel.Make,
+            Model = carModel.Model,
+            Price = carModel.Price,
+            Year = carModel.Year
         };
     }
 }

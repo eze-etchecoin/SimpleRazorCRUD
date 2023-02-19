@@ -40,7 +40,17 @@ namespace SimpleRazorCRUD.DataRepositories
 
         public void Update(Car entity)
         {
-            throw new NotImplementedException();
+            var existing = cars.FirstOrDefault(x => x.Id == entity.Id);
+
+            if (existing == null)
+                return;
+
+            existing.Make = entity.Make;
+            existing.Model = entity.Model;
+            existing.Year = entity.Year;
+            existing.Doors = entity.Doors;
+            existing.Color = entity.Color;
+            existing.Price = entity.Price;
         }
 
         private int GetNextId()

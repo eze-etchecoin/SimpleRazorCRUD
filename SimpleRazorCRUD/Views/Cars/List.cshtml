@@ -2,6 +2,10 @@
     ViewData["Title"] = "Cars CRUD";
 }
 
+@section Scripts{
+    <script src="~/js/Cars/List.js" asp-append-version="true"></script>
+}
+
 @model IEnumerable<CarModel>
 
 <h1 class="display-4">Cars CRUD</h1>
@@ -9,7 +13,7 @@
 
 <div class="row">
     <div class="col-2">
-        <button type="button" class="btn btn-primary" onclick="location.href = '/Cars/Add'">
+        <button type="button" class="btn btn-primary" onclick="goToAdd()">
             <span class="fa-solid fa-plus"></span>
             Add new
         </button>
@@ -48,34 +52,40 @@
                 @foreach (var car in Model)
                 {
                     <tr>
-                        <td>
+                        <td class="pointer" onclick="goToDetails(@car.Id)">
                             @car.Id
                         </td>
-                        <td>
+                        <td class="pointer" onclick="goToDetails(@car.Id)">
                             @car.Make
                         </td>
-                        <td>
+                        <td class="pointer" onclick="goToDetails(@car.Id)">
                             @car.Model
                         </td>
-                        <td>
+                        <td class="pointer" onclick="goToDetails(@car.Id)">
                             @car.Year
                         </td>
-                        <td>
+                        <td class="pointer" onclick="goToDetails(@car.Id)">
                             @car.Color
-                        </td>
-                        <td class="text-end">
+                        </td class="pointer">
+                        <td class="text-end pointer" onclick="goToDetails(@car.Id)">
                             @car.Price
                         </td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-light" onclick="location.href = '/Edit/@car.Id'">
+                            <button type="button" class="btn btn-sm btn-light" onclick="goToEdit(@car.Id)">
                                 <span class="fa-solid fa-edit"></span>
                                 Edit
                             </button>
-                            <button class="btn btn-sm btn-light" onclick="location.href = '/Delete/@car.Id'">
+                            <button class="btn btn-sm btn-light" onclick="goToDelete(@car.Id)">
                                 <span class="fa-solid fa-remove"></span>
                                 Delete
                             </button>
                         </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="7">*** No data to show ***</td>
                     </tr>
                 }
             </tbody>
