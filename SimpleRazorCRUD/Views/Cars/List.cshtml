@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SimpleRazorCRUD.Models.Cars
+
+@{
     ViewData["Title"] = "Cars CRUD";
 }
 
@@ -40,9 +42,9 @@
                     <th>
                         Color
                     </th>
-                    <th>
+                    @*<th>
                         Price
-                    </th>
+                    </th>*@
                     <th>
                         Actions
                     </th>
@@ -67,9 +69,9 @@
                         <td class="pointer" onclick="goToDetails(@car.Id)">
                             @car.Color
                         </td class="pointer">
-                        <td class="text-end pointer" onclick="goToDetails(@car.Id)">
+                        @*<td class="text-end pointer" onclick="goToDetails(@car.Id)">
                             @car.Price
-                        </td>
+                        </td>*@
                         <td>
                             <button type="button" class="btn btn-sm btn-light" onclick="goToEdit(@car.Id)">
                                 <span class="fa-solid fa-edit"></span>
@@ -79,13 +81,17 @@
                                 <span class="fa-solid fa-remove"></span>
                                 Delete
                             </button>
+                            <button class="btn btn-sm btn-light" onclick="goToGuessPrice(@car.Id)">
+                                <span class="fa-solid fa-star"></span>
+                                Guess price
+                            </button>
                         </td>
                     </tr>
                 }
                 @if (!Model.Any())
                 {
                     <tr>
-                        <td colspan="7">*** No data to show ***</td>
+                        <td colspan="6">*** No data to show ***</td>
                     </tr>
                 }
             </tbody>

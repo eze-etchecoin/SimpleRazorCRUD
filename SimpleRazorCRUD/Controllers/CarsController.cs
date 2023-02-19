@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SimpleRazorCRUD.DataRepositories.Interfaces;
 using SimpleRazorCRUD.EntitiesModels;
-using SimpleRazorCRUD.Models;
+using SimpleRazorCRUD.Models.Cars;
 
 namespace SimpleRazorCRUD.Controllers
 {
@@ -120,6 +120,41 @@ namespace SimpleRazorCRUD.Controllers
             _carRepository.Delete(car);
 
             return RedirectToAction(nameof(Index));
+        }
+
+
+        public ActionResult GuessPrice(int id)
+        {
+            var car = _carRepository.GetOne(id);
+
+            if (car == null)
+                return NotFound();
+
+            var model = MapCarToCarModel(car);
+
+            ViewData["Title"] = $"Guess price of car - {model.Make} {model.Model}";
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public PriceGuessResponse PriceGuess([FromBody] PriceGuessRequest request)
+        {
+            var response = new PriceGuessResponse();
+
+            var car = _carRepository.GetOne(request.CarId);
+            if (car == null)
+                return response;
+
+            var guessValue = int.TryParse(request.Value, out var value)
+                ? value
+                : 0;
+
+            var difference = Math.Abs(car.Price - guessValue);
+
+            response.Result = difference <= 5000;
+
+            return response;
         }
 
         // This methods were created to map data between Models from views and Entities.

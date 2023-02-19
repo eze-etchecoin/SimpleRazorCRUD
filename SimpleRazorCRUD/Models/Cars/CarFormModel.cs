@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace SimpleRazorCRUD.Models
+namespace SimpleRazorCRUD.Models.Cars
 {
     public class CarFormModel : CarModel
     {

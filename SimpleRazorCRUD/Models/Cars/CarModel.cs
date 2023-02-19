@@ -1,4 +1,4 @@
-﻿namespace SimpleRazorCRUD.Models
+﻿namespace SimpleRazorCRUD.Models.Cars
 {
     // I consider a good practice separating the data classes from the view model classes
     // in order to give the view more adaptability when extra data is needed, besides the data class fields.
